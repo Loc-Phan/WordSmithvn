@@ -73,10 +73,9 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">WordList - Frequency</h1>
+					<h1 class="h3 mb-2 text-gray-800">KeyWords</h1>
 					<p class="mb-4">
-						Thống kê tất cả các từ phân biệt có trong đoạn text, số lần xuất
-						hiện, phần trăm số lần xuất hiện </a>.
+						 Tìm kiếm từ khóa trong văn bản
 					</p>
 
 
@@ -85,14 +84,16 @@
 						<div class="card-header py-3">
 							<form:form method="POST" action="uploadFile" enctype="multipart/form-data" modelAttribute="myFile">
 							
-    File corpus: <input type="file" name="multipartFile" /> <br /> <br/>
-    <input type="submit" value="Submit" />
+    File ngữ liệu: <input type="file" name="multipartFile" /> <br /> <br/>
+     
+    <input type="submit" value="Tải tệp lên" />
     </form:form>
     <form:form method="POST" action="processKey" enctype="multipart/form-data" modelAttribute="myFile">
 		<br/>
-		<label for="uname"><b>Number of keywords</b></label>
+		<label for="uname"><b>Số từ khóa: </b></label>
 		<input type="text" name="num"/>
-		<input type="submit" value="Process" />
+		<br/><br/>
+		<input type="submit" value="Xử lý" />
   </form:form>
 						</div>
 						<div class="card-body">

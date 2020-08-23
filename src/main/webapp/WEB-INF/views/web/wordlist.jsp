@@ -73,10 +73,9 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">WordList - Frequency</h1>
+					<h1 class="h3 mb-2 text-gray-800">WordList</h1>
 					<p class="mb-4">
-						Thống kê tất cả các từ phân biệt có trong đoạn text, số lần xuất
-						hiện, phần trăm số lần xuất hiện </a>.
+						Thống kê tất cả các từ có trong văn bản</a>.
 					</p>
 
 
@@ -86,14 +85,17 @@
 							<form:form method="POST" action="uploadMultipleFiles" enctype="multipart/form-data" modelAttribute="myFile">
 							
     File: <input type="file" name="multipartFile" /> <br /> <br/>
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Tải tệp lên" />
     </form:form>
     <form:form method="POST" action="process" enctype="multipart/form-data" modelAttribute="myFile">
-		<input type="checkbox" name="case" value="case"/> case 
-								<input type="checkbox" name="punc" value="punc" /> punc <input
-									type="checkbox" name="num" value="num" /> num <input
-									type="checkbox" name="pos" value="pos" /> pos					
-    <input type="submit" value="Process" />
+    <br/>
+		<h5><b>Tùy chọn:</b></h5> <input type="checkbox" name="case" value="case"/> Không phân biệt chữ hoa, thường <br/> 
+								<input type="checkbox" name="punc" value="punc" /> Không tính dấu câu <br/> <input
+									type="checkbox" name="num" value="num" /> Không tính số <br/> <input
+									type="checkbox" name="pos" value="pos" /> Không tính từ loại 			
+    <br/>
+    <br/>
+    <input type="submit" value="Xử lý" />
   </form:form>
 						</div>
 						<div class="card-body">

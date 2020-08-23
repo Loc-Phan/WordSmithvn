@@ -177,8 +177,12 @@ public class Concord {
         List<Integer> word_index_file = new ArrayList<>();
         for (int k = 0; k < file_index.size(); k++) {
             if (file_index.get(k) == file) word_index_file.add(word_index.get(k));
-        }
+       
         freqs.add(word_index_file.size());
+        }
+        if(word_index_file.size()==0) {
+     	   return 0.0;
+        }
         int division = 8;
         int division_length = words_count / division;
         List<Integer> freq_division = new ArrayList<>();
@@ -194,8 +198,12 @@ public class Concord {
         int j = 0;
         for (int i = 0; i < word_index_file.size(); i++) {
             j = word_index_file.get(i) / division_length;
-            
+            if(j>=8) {
+            	j=7;
+            }
+
             freq_division.set(j, freq_division.get(j) + 1);
+            
         }
         double mean = (double) word_index_file.size() / division;
         double sum = 0;

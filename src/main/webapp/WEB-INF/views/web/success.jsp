@@ -76,15 +76,15 @@
 					<!-- Page Heading -->
 					
 
-					<h1 class="h3 mb-2 text-gray-800">Tùy chọn</h1>
+					<h3 class="h4 mb-2 text-gray-800"><b>Tùy chọn</b></h3>
 					<p class="mb-4" id="options">
 					
 					</p>
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-						<button id="myBtn1" onClick="">Frequency</button>
-						<button id="myBtn" onClick="">Statistics</button>
+						<button id="myBtn1" onClick="">Tần suất</button>
+						<button id="myBtn" onClick="">Thống kê</button>
 						</div>
 						<div class="card-body" id="frequency">
 							<div class="table-responsive">
@@ -135,26 +135,31 @@
 	<script>
       var showTable = document.getElementById("dataTable");
       var option = ${option};
-      var contentOption = 'Case: '+option[0]+' | Punc: '+option[1]+' | Num: '+option[2]+' | Pos: '+option[3];
+      var contentOption = 'Có phân biệt chữ hoa, thường: '+option[0]+' <br/>Có tính dấu câu: '+option[1]+' <br/>Có tính số: '+option[2]+'<br/>Có tính từ loại: '+option[3];
       document.getElementById("options").innerHTML = contentOption;
       var wordList = ${word_list};
       var statistic = ${statistics};
+      var count=0;
       var content = wordList.map(function(word){
-      	return '<tr><td>' + word.file + '</td><td>' + word.pos + '</td><td>' + word.percent_file + '%</td><td>' +word.word + '</td><td>' + word.percent+'%</td><td>' +word.frequency+'</td></tr>';
+    	 count++;
+      	return '<tr><td>' + count +'</td><td>'+ word.word + '</td><td>' + word.pos + '</td><td>' + word.frequency + '</td><td>' +word.percent + '%</td><td>' + word.file+'</td><td>' +word.percent_file+'%</td></tr>';
+      	
       });
-      var thead = '<thead><tr><th>File</th><th>Pos</th><th>Percent_file</th><th>Word</th><th>Percent</th><th>Frequency</th></tr></thead><tfoot><tr><th>File</th><th>Pos</th><th>Percent_file</th><th>Word</th><th>Percent</th><th>Frequency</th></tr></tfoot><tbody>';
+      var thead = '<thead><tr><th>STT</th><th>Từ</th><th>Từ loại</th><th>Tần suất</th><th>Phần trăm tần suất</th><th>File</th><th>Phần trăm file</th></tr></thead><tbody>';
       showTable.innerHTML = thead+content.join('')+'</tbody>';
       document.getElementById("myBtn1").addEventListener("click",function(){
     	  document.getElementById("statistics").hidden=true;
     	  document.getElementById("frequency").hidden=false;
     	  showTable.innerHTML = thead+content.join('')+'</tbody>';
       });
-      
+      var file_index = ${fileIndex};
+      var stt=-1;
       var contentStatistics = statistic.map(function(word){
-    	 return '<tr><td>' + word.std_word_length + '</td><td>' + word._3gram_word + '</td><td>'+ word.types + '</td><td>' + word.mean_word_length + '</td><td>' + word.sentences + '</td><td>' + word.std_token_length + '</td><td>' + word.ngram_word + '</td><td>' + word.words_in_text + '</td><td>' + word.numbers_removed + '</td><td>' + word._1gram_word + '</td><td>' + word.file_size + '</td><td>'+ word.TWR + '</td><td>'+ word.words_used_for_word_list + '</td><td>' + word.mean_token_length + '</td><td>' + word._5gram_word + '</td><td>' + word.mean_sentence_length + '</td><td>'+ word.punctuations_removed + '</td><td>' + word.std_sentence_length + '</td><td>' + word._2gram_word + '</td><td>'+ word._4gram_word + '</td><td>'+ word.tokens_in_text + '</td></tr>'; 
+    	  stt++;
+    	 return '<tr><td>' + stt + '</td><td>' + file_index[stt] + '</td><td>' + word.file_size + '</td><td>'+ word.tokens_in_text + '</td><td>' + word.words_in_text + '</td><td>' + word.words_used_for_word_list + '</td><td>' + word.types + '</td><td>' + word.TWR + '%</td><td>' + word.sentences +'</td><td>' + word.mean_token_length + '</td><td>' + word.std_token_length + '</td><td>' + word.mean_word_length + '</td><td>' + word.std_word_length + '</td><td>'+ word.mean_sentence_length + '</td><td>'+ word.std_sentence_length + '</td><td>' + word.numbers_removed + '</td><td>' + word.punctuations_removed + '</td><td>' + word._1gram_word + '</td><td>'+ word._2gram_word + '</td><td>' + word._3gram_word + '</td><td>' + word._4gram_word + '</td><td>'+ word._5gram_word + '</td><td>'+ word.ngram_word + '</td></tr>'; 
       });
       
-      var tHead = '<thead><tr><th>std_word_length</th><th>3gram_word</th><th>types</th><th>mean_word_length</th><th>sentences</th><th>std_token_length</th><th>ngram_word</th><th>words_in_text</th><th>numbers_removed</th><th>1gram_word</th><th>file_size</th><th>TWR</th><th>words_used_for_word_list</th><th>mean_token_length</th><th>5gram_word</th><th>mean_sentence_length</th><th>punctuations_removed</th><th>std_sentence_length</th><th>2gram_word</th><th>4gram_word</th><th>tokens_in_text</th></tr></thead><tbody>';
+      var tHead = '<thead><tr><th>STT</th><th>File</th><th>Kích cỡ file (ký tự)</th><th>Tổng số chữ</th><th>Tổng số từ</th><th>Số từ được dùng</th><th>Số từ phân biệt</th><th>Số từ phân biệt/Số từ được dùng </th><th>Số câu</th><th>Độ dài trung bình của chữ</th><th>Độ lệch chuẩn</th><th>Độ dài trung bình của từ</th><th>Độ lệch chuẩn</th><th>Độ dài trung bình của câu</th><th>Độ lệch chuẩn</th><th>Số số bị xóa</th><th>Số dấu câu bị xóa</th><th>Từ có 1 chữ</th><th>Từ có 2 chữ</th><th>Từ có 3 chữ</th><th>Từ có 4 chữ</th><th>Từ có 5 chữ</th><th>Từ có nhiều hơn 5 chữ</th></tr></thead><tbody>';
       //showTable.innerHTML = tHead+contentStatistics.join('')+'</tbody>';
       document.getElementById("myBtn").addEventListener("click", function(){
     	  document.getElementById("frequency").hidden=true;

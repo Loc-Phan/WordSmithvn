@@ -97,14 +97,12 @@ public class HomeController {
 
 		try {
 			MultipartFile multipartFile = myFile.getMultipartFile();
-			String fileName = multipartFile.getOriginalFilename();
-			// model.addAttribute("messages", fileName);
+			//String fileName = multipartFile.getOriginalFilename();
 			String modelPath = System.getProperty("user.dir");
-			File file = new File(modelPath, fileName);
+			File file = new File(modelPath, "corpus_.txt");
 			multipartFile.transferTo(file);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// model.addAttribute("message", "upload failed");
 		}
 
 		return "web/keyword";
@@ -172,6 +170,8 @@ public class HomeController {
 		model.addAttribute("word_list", tempArray);
 		org.json.simple.JSONArray tempStatistics = (org.json.simple.JSONArray) loadParse.get("statistics");
 		model.addAttribute("statistics", tempStatistics);
+		org.json.simple.JSONArray fileIndex = (org.json.simple.JSONArray) loadParse.get("file_index");
+		model.addAttribute("fileIndex", fileIndex);
 		
 
 		return "web/success";
@@ -199,8 +199,13 @@ public class HomeController {
 	public String processKey(@RequestParam(value = "num", required = false) String num,MyFile myFile, Model model)
 			throws IOException, ParseException {
 		
-
-		String corpusName = "corpus.txt";
+		String corpusName="";
+		if(myFile!=null) {
+			corpusName = "corpus_.txt";
+		}
+		else {
+			corpusName = "corpus.txt";
+		}
         String studyName = "output.txt";
         Integer num_keywords = 0;
         try {
@@ -226,26 +231,58 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/processCon", method = RequestMethod.POST)
-	public String processCon(MyFile myFile, Model model)
+	public String processCon(@RequestParam(value = "num", required = false) String word_,
+			@RequestParam(value = "case", required = false) String cases,MyFile myFile, Model model)
 			throws IOException, ParseException {
 		 
 		//System.out.println(myFile);
         // Nếu file không thay đổi thì k cần làm mới lại việc xử lý dữ liệu đầu vào
         String fileName = "./data";
         Concord concord = new Concord(fileName);
-        System.out.println("Chay duoc");
+        
         concord.process();
-        System.out.println("Chay duoc 1");
-
+        
+        String word="";
+        
+        String words = new String(word_.getBytes("UTF-8"));
+        if(word_!=null) {
+        	word = words.replace(" ", "_");
+        }
+        else {
+        	//
+        }
+        
         // Chỉ việc tra từ
-        String word = "bệnh_nhân";
-        boolean case_sensitive = false;
+        //System.out.println(word_);
+        //String word="bệnh_nhân";
+        boolean case_sensitive;
+        if(cases!=null) {
+        	case_sensitive = true;
+        }
+        else {
+        	case_sensitive = false;
+        }
         concord.concordance(word, case_sensitive);
-        System.out.println("Chay duoc 2");
+        
 
         String outfile3 = "concordance.txt";
         concordWriter(concord, outfile3);
-        System.out.println("Chay duoc 3");
+        
+        ReadJSON jsons = new ReadJSON();
+		org.json.simple.JSONObject loadParse = jsons.parseData("concordance.txt");
+		org.json.simple.JSONArray concordance = (org.json.simple.JSONArray) loadParse.get("concordance");
+        model.addAttribute("concordance", concordance);
+        org.json.simple.JSONArray statistics = (org.json.simple.JSONArray) loadParse.get("statistics");
+        model.addAttribute("statistics", statistics);
+        org.json.simple.JSONArray collocates = (org.json.simple.JSONArray) loadParse.get("collocates");
+        model.addAttribute("collocates", collocates);
+        String tu1 = (String) loadParse.get("word");
+        model.addAttribute("tu", tu1);
+        org.json.simple.JSONArray files = (org.json.simple.JSONArray) loadParse.get("files");
+        model.addAttribute("files", files);
+        
+        
+        
 		return "web/successCon";
 	}
 

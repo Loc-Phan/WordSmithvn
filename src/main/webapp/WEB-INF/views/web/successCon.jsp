@@ -74,43 +74,40 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">WordList - Frequency</h1>
+					<h1 class="h3 mb-2 text-gray-800">Concord</h1>
 					<p class="mb-4">
-						Thống kê tất cả các từ phân biệt có trong đoạn text, số lần xuất
-						hiện, phần trăm số lần xuất hiện </a>.
+						Thống kê từ đồng hiện
 					</p>
 
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-header py-3"></div>
-						<div class="card-body">
+						<div class="card-header py-3">
+						<button id="myBtn" onClick="">Tần suất</button>
+						<button id="myBtn1" onClick="">Từ đồng hiện</button>
+						<button id="myBtn2" onClick="">Thống kê</button></div>
+						
+						<div class="card-body" id="concordance">
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable"
 									style="width: 100%; cellspacing: 0;">
-									<thead>
-										<tr>
-											<th>STT</th>
-											<th>Word</th>
-											<th>Pos</th>
-											<th>Frequency</th>
-											<th>Percent</th>
-											<th>File</th>
-										</tr>
-									</thead>
-									<tfoot>
-										<tr>
-											<th>STT</th>
-											<th>Word</th>
-											<th>Pos</th>
-											<th>Frequency</th>
-											<th>Percent</th>
-											<th>File</th>
-										</tr>
-									</tfoot>
-									<tbody>
 									
-									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="card-body" id="statistics">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable1"
+									style="width: 100%; cellspacing: 0;">
+									
+								</table>
+							</div>
+						</div>
+						<div class="card-body" id="collocates">
+							<div class="table-responsive">
+								<table class="table table-bordered" id="dataTable2"
+									style="width: 100%; cellspacing: 0;">
+									
 								</table>
 							</div>
 						</div>
@@ -138,13 +135,86 @@
 	<!-- End of Page Wrapper -->
 	<script>
       var showTable = document.getElementById("dataTable");
-      var wordList = ${word_list};
-      var content = wordList.map(function(word){
-      	return '<tr><td>' + word.file + '</td><td>' + word.pos + '</td><td>' + word.percent_file + '%</td><td>' +word.word + '</td><td>' + word.percent+'%</td><td>' +word.frequency+'</td><tr>';
+      var concordance = ${concordance};
+      var statistics = ${statistics};
+      var collocates = ${collocates};
+      var tu = "${tu}";
+      var stt=0;
+      var files = ${files};
+     
+      var content = concordance.map(function(word){
+    	  stt++;
+      	return '<tr><td>'+ stt + '</td><td>' + word.context[0] + '<b style="color:blue;"> ' + word.context[1] +' </b>' + word.context[2] + '</td><td>' +word.pos + '</td><td>' + word.word_index+'</td><td>' +word.percent_word_index+'%</td><td>'+word.sentence_index+'</td><td>'+word.percent_sentence_index+'%</td><td>'+files[stt-1]+'</td></tr>';
       });
-      var thead = '<thead><tr><th>File</th><th>Pos</th><th>Percent_file</th><th>Word</th><th>Percent</th><th>Frequency</th></tr></thead><tfoot><tr><th>File</th><th>Pos</th><th>Percent_file</th><th>Word</th><th>Percent</th><th>Frequency</th></tr></tfoot><tbody>';
+      var thead = '<thead><tr><th>STT</th><th>Ngữ cảnh</th><th>Từ loại</th><th>Vị trí từ</th><th>Phần trăm vị trí từ</th><th>Vị trí câu</th><th>Phần trăm vị trí câu</th><th>File</th></tr></thead>';
       showTable.innerHTML = thead+content.join('')+'</tbody>';
-    </script>
+      document.getElementById("myBtn").addEventListener("click",function(){
+    	  document.getElementById("concordance").hidden=false;
+    	  document.getElementById("collocates").hidden=true;
+    	  document.getElementById("statistics").hidden=true;
+    	  showTable.innerHTML = thead+content.join('')+'</tbody>';
+      }); 
+      
+      var stt1=0;
+      var contentStatistics = statistics.map(function(word){
+    	  stt1++;
+      	return '<tr><td>'+ stt1 + '</td><td>' + files[stt1-1] + '</td><td>' +word.words + '</td><td>' + word.hits+'</td><td>' +word.dispersion+'</td></tr>';
+      });
+      var tHead = '<thead><tr><th>STT</th><th>File</th><th>Tổng số từ</th><th>Tần suất</th><th>Độ phân tán</th></tr></thead>';
+      document.getElementById("myBtn2").addEventListener("click",function(){
+    	  document.getElementById("concordance").hidden=true;
+    	  document.getElementById("collocates").hidden=true;
+    	  document.getElementById("statistics").hidden=false;
+      	document.getElementById("dataTable1").innerHTML = tHead+contentStatistics.join('')+'</tbody>';
+      });
+      
+      
+ 		     var stt2=0;
+      var contentCollocates = collocates.map(function(word){
+    	  stt2++;
+    	  var key = [];
+    	  for(k in word) {
+    		  key.push(k);
+    	  }
+    	  var temp = key[0];
+    	  var arr = word[temp];
+    	  
+    	  
+    	  var totalL = 0;
+    	  var totalR = 0;
+    	  for(var i=0;i<5;i++) {
+    		  totalL+=arr[i];
+    	  }
+    	  
+    
+    	  for(var i=5;i<10;i++) {
+    		  totalR+=arr[i];
+    	  }
+    	  var total = totalL + totalR;
+    	  for(var i=0;i<10;i++) {
+    		  if(arr[i]==0) {
+    			  arr[i]="";
+    		  }
+    	  }
+      	var res =  '<tr><td>'+ stt2 + '</td><td>' + key[0] + '</td><td>' +total + '</td><td>' + totalL+'</td><td>' +totalR+'</td><td>' +arr[0]+'</td><td>' +arr[1]+'</td><td>' +arr[2]+'</td><td>' +arr[3]+'</td><td>' +arr[4]+ '</td><td>'+""+'</td><td>' +arr[5]+'</td><td>' +arr[6]+'</td><td>' +arr[7]+'</td><td>' +arr[8]+'</td><td>' +arr[9]+'</td></tr>';
+      	//console.log(res);
+      	return res;
+      });
+      
+      var tHead_ = '<thead><tr><th>STT</th><th>Từ</th><th>Tổng cộng</th><th>Tổng trái</th><th>Tổng phải</th><th>L5</th><th>L4</th><th>L3</th><th>L2</th><th>L1</th><th>Centre</th><th>R1</th><th>R2</th><th>R3</th><th>R4</th><th>R5</th></tr></thead>';
+      var centre = '<tr><td>'+ 0 + '</td><td>' + tu.toUpperCase() + '</td><td>' + concordance.length + '</td><td>' +0 +'</td><td>' +0+'</td><td>' +""+'</td><td>' +""+'</td><td>' +""+'</td><td>' +""+'</td><td>' +""+'</td><td style="color:red">'+concordance.length+'</td><td>' + ""+'</td><td>' +""+'</td><td>' +""+'</td><td>' +""+'</td><td>' +""+'</td></tr>';
+      //console.log(centre);
+      
+      document.getElementById("myBtn1").addEventListener("click",function(){
+    	  document.getElementById("concordance").hidden=true;
+    	  document.getElementById("statistics").hidden=true;
+    	  document.getElementById("collocates").hidden=false;
+    	  
+      	
+    	  document.getElementById("dataTable2").innerHTML = tHead_+centre+('')+contentCollocates.join('')+'</tbody>';
+      }); 
+      
+      </script>
 
 	<!-- Bootstrap core JavaScript -->
 	<script

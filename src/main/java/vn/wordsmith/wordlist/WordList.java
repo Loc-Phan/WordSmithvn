@@ -110,8 +110,8 @@ public class WordList {
     }
 
     private void initOptions(List<String> options, SingleWordList swl) {
-    	
-    	
+    	swl.statistics.put("numbers_removed", 0);
+    	swl.statistics.put("punctuations_removed", 0);
     	for (String option : options) {
 			
 				if (option.equals("case"))

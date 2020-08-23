@@ -73,10 +73,9 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">WordList - Frequency</h1>
+					<h1 class="h3 mb-2 text-gray-800">Concord</h1>
 					<p class="mb-4">
-						Thống kê tất cả các từ phân biệt có trong đoạn text, số lần xuất
-						hiện, phần trăm số lần xuất hiện </a>.
+						Thống kê từ đồng hiện 
 					</p>
 
 
@@ -86,13 +85,18 @@
 							<form:form method="POST" action="uploadCon" enctype="multipart/form-data" modelAttribute="myFile">
 							
     File: <input type="file" name="multipartFile" /> <br /> <br/>
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Tải tệp lên" /> <br/> <br/>
     </form:form>
-    <form:form method="POST" action="processCon" enctype="multipart/form-data" modelAttribute="myFile">
-		<input type="submit" value="Process" />
+    <form:form method="POST" action="processCon" enctype="multipart/form-data" modelAttribute="myFile" accept-charset="UTF-8">
+		<label for="uname"><b>Tùy chọn: </b></label> <br/>
+		<input type="checkbox" name="case" value="case"/> Không phân biệt chữ hoa, thường <br/> <br/>
+		<label for="uname"><b>Nhập một từ: </b></label>
+		<input type="text" name="num"/> <br/> <br/>
+		<input type="submit" value="Xử lý" />
   </form:form>
 						</div>
 						<div class="card-body">
+						
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable" width="100%"
 									cellspacing="0">

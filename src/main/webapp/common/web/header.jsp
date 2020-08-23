@@ -54,8 +54,8 @@
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom Concord:</h6>
-              <a class="collapse-item" href="<c:url value='/concord'/>">Statictis</a>
+              
+              <a class="collapse-item" href="<c:url value='/concord'/>">Kết quả</a>
               
             </div>
           </div>
@@ -81,8 +81,8 @@
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom Utilities:</h6>
-              <a class="collapse-item" href="<c:url value='/wordlist'/>">Frequency, Statistics</a>
+              
+              <a class="collapse-item" href="<c:url value='/wordlist'/>">Kết quả</a>
               
             </div>
           </div>
@@ -107,8 +107,8 @@
             data-parent="#accordionSidebar"
           >
             <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Custom KeyWords:</h6>
-              <a class="collapse-item" href="<c:url value='/keyword'/>">Key Word</a>
+              
+              <a class="collapse-item" href="<c:url value='/keyword'/>">Kết quả</a>
               
             </div>
           </div>

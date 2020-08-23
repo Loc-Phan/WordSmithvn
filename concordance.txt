@@ -1,0 +1,1 @@
+{"files":[".\\data\\test1.txt",".\\data\\test2.txt"],"collocates":[],"word":"bá»\u0087nh_nhÃ¢n","case":false,"concordance":[],"statistics":[{"hits":0,"words":34,"dispersion":0.0},{"hits":0,"words":31,"dispersion":0.0}]}

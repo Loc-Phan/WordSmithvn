@@ -40,8 +40,21 @@ public class ConcordWriter {
         for (int i = 0; i < concord.fileIndex.size(); i++) {
             JSONObject plot_file = new JSONObject();
             plot_file.put("words", concord.num_words.get(i));
+            if(concord.freqs.size()==0) {
+            	plot_file.put("hits", 0);
+            }
+            else 
             plot_file.put("hits", concord.freqs.get(i));
-            plot_file.put("dispersion", Double.parseDouble(df.format(concord.dispersions.get(i))));
+            
+            
+            	//System.out.println(df.format(concord.dispersions.get(i)));
+            
+            if(!df.format(concord.dispersions.get(i)).equals("?")) {
+            	plot_file.put("dispersion", Double.parseDouble(df.format(concord.dispersions.get(i))));
+            }
+            else {
+            	plot_file.put("dispersion",0.0);
+            }
             statistics.add(plot_file);
         }
         jsonObject.put("statistics", statistics);

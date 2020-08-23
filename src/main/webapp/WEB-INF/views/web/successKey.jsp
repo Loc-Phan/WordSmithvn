@@ -74,16 +74,15 @@
 				<div class="container-fluid">
 
 					<!-- Page Heading -->
-					<h1 class="h3 mb-2 text-gray-800">WordList - Frequency</h1>
+					<h1 class="h3 mb-2 text-gray-800">KeyWords</h1>
 					<p class="mb-4">
-						Thống kê tất cả các từ phân biệt có trong đoạn text, số lần xuất
-						hiện, phần trăm số lần xuất hiện </a>.
+						Tìm kiếm từ khóa trong văn bản
 					</p>
 
 
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
-						<div class="card-header py-3"></div>
+						
 						<div class="card-body">
 							<div class="table-responsive">
 								<table class="table table-bordered" id="dataTable"
@@ -117,10 +116,12 @@
 	<script>
       var showTable = document.getElementById("dataTable");
       var keywords = ${keywords};
+      var stt=0;
       var content = keywords.map(function(word){
-      	return '<tr><td>' + word.frequency_corpus + '</td><td>' + word.score + '</td><td>' + word.file + '</td><td>' +word.percent_corpus + '%</td><td>' + word.pos+'</td><td>'+ word.word +'</td><td>'+ word.percent +'%</td><td>'+word.frequency +'</td></tr>';
+    	  stt++;
+      	return '<tr><td>' + stt +'</td><td>' + word.word + '</td><td>' + word.pos + '</td><td>' + word.frequency + '</td><td>' +word.percent + '%</td><td>' + word.frequency_corpus+'</td><td>'+ word.percent_corpus +'%</td><td>'+ word.score +'</td><td>'+word.file +'</td></tr>';
       });
-      var thead = '<thead><tr><th>frequency_corpus</th><th>score</th><th>file</th><th>percent_corpus</th><th>pos</th><th>word</th><th>percent</th><th>frequency</th></tr></thead><tfoot><tr><th>frequency_corpus</th><th>score</th><th>file</th><th>percent_corpus</th><th>pos</th><th>word</th><th>percent</th><th>frequency</th></tr></tfoot><tbody>';
+      var thead = '<thead><tr><th>STT</th><th>Từ khóa</th><th>Từ loại</th><th>Tần suất</th><th>Phần trăm tần suất</th><th>Tần suất trong ngữ liệu</th><th>Phần trăm tần suất trong ngữ liệu</th><th>TFIDF</th><th>Số file</th></tr></thead><tbody>';
       showTable.innerHTML = thead+content.join('')+'</tbody>';
     </script>
 
